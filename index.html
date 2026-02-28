@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loratek — Enterprise Technology Solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400&family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080a0e;
+    --surface: #0d1117;
+    --border: rgba(255,255,255,0.07);
+    --accent: #e8ff47;
+    --accent2: #47c8ff;
+    --text: #f0f2f5;
+    --muted: #6b7280;
+    --card: #111520;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 400;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  .cursor {
+    position: fixed;
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 32px; height: 32px;
+    border: 1px solid rgba(232,255,71,0.4);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(8,10,14,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .logo-text {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--text);
+    text-transform: uppercase;
+  }
+  .logo-text span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    font-family: 'Barlow', sans-serif;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta {
+    background: var(--accent) !important;
+    color: #080a0e !important;
+    padding: 8px 20px;
+    border-radius: 2px;
+    font-weight: 700 !important;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 120px 48px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(232,255,71,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232,255,71,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+  }
+  .orb1 { width: 600px; height: 600px; background: rgba(232,255,71,0.06); top: -150px; right: -100px; }
+  .orb2 { width: 400px; height: 400px; background: rgba(71,200,255,0.05); bottom: 0; left: 150px; }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 950px;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    border: 1px solid rgba(232,255,71,0.2);
+    padding: 6px 14px;
+    border-radius: 2px;
+  }
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: blink 2s infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1}50%{opacity:0.2} }
+
+  .hero h1 {
+    font-size: clamp(52px, 7.5vw, 100px);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+  }
+  .hero h1 .italic-line {
+    font-family: 'Barlow', sans-serif;
+    font-weight: 200;
+    font-style: italic;
+    color: rgba(240,242,245,0.5);
+    display: block;
+    letter-spacing: 0;
+  }
+  .hero h1 .accent { color: var(--accent); }
+
+  .hero-desc {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 520px;
+    line-height: 1.7;
+    margin-bottom: 48px;
+    font-weight: 400;
+  }
+
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #080a0e;
+    padding: 14px 32px;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(232,255,71,0.3); }
+
+  .btn-ghost {
+    color: var(--text);
+    padding: 14px 32px;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    text-decoration: none;
+    display: inline-block;
+    transition: border-color 0.2s;
+  }
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.25); }
+
+  /* TICKER */
+  .stats-bar {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .ticker-track {
+    display: flex;
+    animation: ticker 22s linear infinite;
+    white-space: nowrap;
+  }
+  .ticker-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 48px;
+    flex-shrink: 0;
+    border-right: 1px solid var(--border);
+  }
+  .ticker-num {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--accent);
+    font-family: 'Roboto Mono', monospace;
+  }
+  .ticker-label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-family: 'Roboto Mono', monospace;
+  }
+  @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+  /* SECTIONS */
+  section { padding: 100px 48px; }
+
+  .section-label {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::before { content:''; width:32px; height:1px; background:var(--accent); }
+
+  .section-title {
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    margin-bottom: 20px;
+  }
+  .section-title em {
+    font-family: 'Barlow', sans-serif;
+    font-style: italic;
+    font-weight: 200;
+    color: rgba(240,242,245,0.45);
+  }
+
+  /* SERVICE ACCORDION */
+  .service-accordion {
+    border: 1px solid var(--border);
+  }
+
+  .svc-row {
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.25s;
+    overflow: hidden;
+  }
+  .svc-row:last-child { border-bottom: none; }
+  .svc-row:hover { background: rgba(255,255,255,0.02); }
+  .svc-row.open { background: rgba(232,255,71,0.02); }
+  .svc-row.open::before {
+    content: '';
+    display: block;
+    height: 2px;
+    background: var(--accent);
+    position: relative;
+    top: 0;
+  }
+
+  .svc-row > .svc-left,
+  .svc-row > .svc-right {
+    display: inline-flex;
+  }
+
+  .svc-row-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 32px 40px;
+    gap: 32px;
+  }
+
+  .svc-left {
+    display: flex !important;
+    align-items: flex-start;
+    gap: 28px;
+    flex: 1;
+  }
+
+  .svc-num {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    flex-shrink: 0;
+    padding-top: 4px;
+    min-width: 28px;
+  }
+
+  .svc-title {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+    transition: color 0.2s;
+  }
+  .svc-row:hover .svc-title { color: var(--accent); }
+
+  .svc-tagline {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.5;
+    font-weight: 400;
+  }
+
+  .svc-right {
+    display: flex !important;
+    align-items: center;
+    gap: 24px;
+    flex-shrink: 0;
+  }
+
+  .svc-tags-inline {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .svc-toggle {
+    width: 32px; height: 32px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: border-color 0.2s, transform 0.3s;
+  }
+  .svc-toggle svg { width: 14px; height: 14px; color: var(--muted); transition: transform 0.3s; }
+  .svc-row.open .svc-toggle { border-color: var(--accent); }
+  .svc-row.open .svc-toggle svg { transform: rotate(180deg); color: var(--accent); }
+
+  /* Accordion body */
+  .svc-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+  .svc-row.open .svc-body { max-height: 400px; }
+
+  .svc-body-inner {
+    padding: 0 40px 36px 96px;
+    border-top: 1px solid var(--border);
+    padding-top: 28px;
+  }
+
+  .svc-bullets-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 48px;
+  }
+  @media (max-width: 700px) { .svc-bullets-grid { grid-template-columns: 1fr; } }
+
+  .svc-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .svc-list li {
+    font-size: 14px;
+    color: var(--muted);
+    font-weight: 400;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.4;
+    transition: color 0.2s;
+  }
+  .svc-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 5px; height: 1px;
+    background: var(--accent);
+    opacity: 0.6;
+  }
+  .svc-row.open .svc-list li { color: rgba(255,255,255,0.7); }
+
+  /* Override grid in services to single col */
+  .services-grid { display: none; }
+
+  /* PROCESS */
+  .process {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+  }
+
+  .process-intro {
+    color: var(--muted);
+    font-size: 16px;
+    margin-top: 8px;
+    margin-bottom: 64px;
+    font-weight: 400;
+    max-width: 480px;
+  }
+
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border: 1px solid var(--border);
+    position: relative;
+  }
+
+  .process-step {
+    padding: 40px 36px;
+    border-right: 1px solid var(--border);
+    position: relative;
+    transition: background 0.3s;
+  }
+  .process-step:last-child { border-right: none; }
+  .process-step:hover { background: rgba(232,255,71,0.03); }
+
+  .process-step-num {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    margin-bottom: 20px;
+  }
+
+  .process-connector {
+    position: absolute;
+    top: 60px;
+    right: -20px;
+    width: 40px;
+    height: 1px;
+    background: rgba(232,255,71,0.2);
+    z-index: 2;
+  }
+  .process-step:last-child .process-connector { display: none; }
+
+  .process-icon {
+    width: 44px; height: 44px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    transition: border-color 0.3s;
+  }
+  .process-icon svg { width: 20px; height: 20px; color: var(--accent); }
+  .process-step:hover .process-icon { border-color: rgba(255,255,255,0.25); }
+
+  .process-step-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+
+  .process-step-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.65;
+    font-weight: 400;
+  }
+
+  @media (max-width: 900px) {
+    .process-grid { grid-template-columns: 1fr 1fr; }
+    .process-step { border-bottom: 1px solid var(--border); }
+  }
+  @media (max-width: 580px) {
+    .process-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Reflow svc-row for flex layout */
+  .svc-row {
+    display: flex;
+    flex-direction: column;
+  }
+  .svc-row > .svc-left,
+  .svc-row > .svc-right {
+    display: flex !important;
+  }
+  .svc-row-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 32px 40px;
+    gap: 32px;
+  }
+
+  @media (max-width: 700px) {
+    .svc-tags-inline { display: none; }
+    .svc-row-wrapper { flex-wrap: wrap; }
+    .svc-body-inner { padding-left: 40px; }
+  }
+
+  .services-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 64px;
+    align-items: end;
+  }
+  .services-intro {
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.7;
+    font-weight: 400;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .service-card {
+    background: var(--card);
+    padding: 40px 36px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+  .service-card:hover { background: #141926; }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: transparent;
+    transition: background 0.3s;
+  }
+  .service-card:hover::before { background: var(--accent); }
+
+  .service-num {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 24px;
+  }
+  .service-icon { width: 40px; height: 40px; margin-bottom: 20px; color: var(--accent); }
+  .service-name { font-size: 17px; font-weight: 600; margin-bottom: 12px; letter-spacing: -0.01em; }
+  .service-desc { font-size: 14px; color: var(--muted); line-height: 1.65; font-weight: 400; margin-bottom: 24px; }
+  .service-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 3px 8px;
+    border-radius: 2px;
+    letter-spacing: 0.05em;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .service-card:hover .tag { border-color: rgba(232,255,71,0.2); color: rgba(240,242,245,0.7); }
+
+  /* WHY */
+  .why { border-top: 1px solid var(--border); }
+
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+    margin-top: 64px;
+  }
+
+  .why-list {
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+  }
+  .why-item {
+    padding: 28px 32px;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 20px;
+    align-items: start;
+    transition: background 0.2s;
+  }
+  .why-item:last-child { border-bottom: none; }
+  .why-item:hover { background: var(--surface); }
+
+  .why-icon {
+    width: 36px; height: 36px;
+    background: rgba(232,255,71,0.08);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .why-icon svg { width: 15px; height: 15px; color: var(--accent); }
+
+  .why-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .why-text { font-size: 13px; color: var(--muted); line-height: 1.6; font-weight: 400; }
+
+  .why-visual {
+    position: sticky;
+    top: 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* TESTIMONIAL CARDS */
+  .testi-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--border);
+    padding: 32px;
+    transition: border-left-color 0.3s, background 0.3s;
+    position: relative;
+  }
+  .testi-card:hover {
+    border-left-color: var(--accent);
+    background: #0f1520;
+  }
+
+  .testi-quote-mark {
+    font-size: 72px;
+    line-height: 0.6;
+    color: var(--accent);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 700;
+    margin-bottom: 20px;
+    opacity: 0.6;
+    display: block;
+  }
+
+  .testi-text {
+    font-size: 14px;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.75;
+    font-weight: 400;
+    margin-bottom: 28px;
+    font-style: italic;
+  }
+
+  .testi-author {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .testi-avatar {
+    width: 40px; height: 40px;
+    background: rgba(232,255,71,0.1);
+    border: 1px solid rgba(232,255,71,0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    flex-shrink: 0;
+    letter-spacing: 0.05em;
+  }
+
+  .testi-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+
+  .testi-role {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'Roboto Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+
+  /* VISION */
+  .vision-section {
+    background: var(--accent);
+    color: #080a0e;
+    padding: 100px 48px;
+  }
+  .vision-section .section-label { color: rgba(8,10,14,0.45); }
+  .vision-section .section-label::before { background: rgba(8,10,14,0.3); }
+  .vision-section .section-title { color: #000000; }
+  .vision-section .section-title em { color: rgba(8,10,14,0.35); }
+
+  .vision-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: rgba(8,10,14,0.15);
+    border: 1px solid rgba(8,10,14,0.15);
+    margin-top: 60px;
+  }
+  .vision-card {
+    background: var(--accent);
+    padding: 52px 48px;
+    transition: background 0.3s;
+  }
+  .vision-card:hover { background: #dff03e; }
+  .vision-card-num {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 11px;
+    opacity: 0.4;
+    letter-spacing: 0.15em;
+    margin-bottom: 20px;
+  }
+  .vision-card-title {
+    font-size: 26px;
+    font-weight: 800;
+    color: #000000;
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+  }
+  .vision-card-text {
+    font-size: 15px;
+    color: rgba(8,10,14,0.6);
+    line-height: 1.7;
+    font-weight: 400;
+  }
+
+  /* CTA */
+  .cta-section {
+    padding: 140px 48px;
+    text-align: center;
+    position: relative;
+    border-top: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .cta-bg-text {
+    position: absolute;
+    font-size: clamp(100px, 18vw, 220px);
+    font-weight: 800;
+    line-height: 0.85;
+    color: rgba(255,255,255,0.015);
+    letter-spacing: -0.05em;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    white-space: nowrap;
+    font-family: 'Barlow', sans-serif;
+  }
+  .cta-content { position: relative; z-index: 2; max-width: 680px; margin: 0 auto; }
+  .cta-section .section-label { justify-content: center; }
+  .cta-section .section-title { margin-bottom: 20px; }
+  .cta-desc { color: var(--muted); font-size: 16px; margin-bottom: 36px; font-weight: 400; line-height: 1.7; }
+  .cta-email {
+    display: inline-block;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 20px;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.25);
+    padding-bottom: 4px;
+    margin-bottom: 48px;
+    transition: border-color 0.2s;
+  }
+  .cta-email:hover { border-color: var(--accent); }
+
+  /* FOOTER */
+  footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 40px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  .footer-brand { display: flex; align-items: center; gap: 8px; }
+  .footer-logo-text { font-size: 16px; font-weight: 800; letter-spacing: 0.05em; }
+  .footer-logo-text span { color: var(--accent); }
+  .footer-copy { font-family: 'Roboto Mono', monospace; font-size: 12px; color: var(--muted); margin-left: 20px; }
+  .footer-links { display: flex; gap: 28px; list-style: none; }
+  .footer-links a {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--text); }
+  .status-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 11px;
+    color: #4ade80;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .status-dot-green {
+    width: 6px; height: 6px;
+    background: #4ade80;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #4ade80;
+    animation: blink 3s infinite;
+  }
+
+  /* ANIMATIONS */
+  .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section, .hero, .cta-section, footer, .vision-section { padding-left: 24px; padding-right: 24px; }
+    .services-header, .why-grid, .vision-grid { grid-template-columns: 1fr; }
+    .services-grid { grid-template-columns: 1fr; }
+    .why-visual { position: static; }
+    .hero h1 { font-size: clamp(44px, 11vw, 72px); }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <svg width="36" height="30" viewBox="0 0 80 66" fill="none">
+      <line x1="8" y1="6" x2="8" y2="52" stroke="white" stroke-width="2.8" stroke-linecap="round"/>
+      <line x1="16" y1="14" x2="16" y2="52" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+      <line x1="24" y1="22" x2="24" y2="52" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="8" y1="52" x2="68" y2="52" stroke="white" stroke-width="2.8" stroke-linecap="round"/>
+      <line x1="16" y1="52" x2="68" y2="44" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+      <line x1="24" y1="52" x2="68" y2="36" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+      <circle cx="8" cy="52" r="3.5" fill="#e8ff47"/>
+      <circle cx="68" cy="52" r="3.5" fill="#e8ff47"/>
+      <circle cx="68" cy="44" r="2.5" fill="white" opacity="0.5"/>
+    </svg>
+    <span class="logo-text"><span>LORA</span>TEK</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">How We Work</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#vision">Vision</a></li>
+    <li><a href="#contact" class="nav-cta">Get in Touch</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Powering Africa's Digital Future</div>
+    <h1>
+      Enterprise<br>
+      <span class="italic-line">Technology</span>
+      Solutions<span class="accent">.</span>
+    </h1>
+    <p class="hero-desc">
+      Reliable, secure, and scalable IT infrastructure, AI solutions, and digital transformation services for forward-thinking organizations across Africa.
+    </p>
+    <div class="hero-actions">
+      <a href="#services" class="btn-primary">Explore Services →</a>
+      <a href="#contact" class="btn-ghost">Contact Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS TICKER -->
+<div class="stats-bar">
+  <div class="ticker-track">
+    <div class="ticker-item"><span class="ticker-num">99.9%</span><span class="ticker-label">Uptime SLA</span></div>
+    <div class="ticker-item"><span class="ticker-num">50+</span><span class="ticker-label">Projects Delivered</span></div>
+    <div class="ticker-item"><span class="ticker-num">24/7</span><span class="ticker-label">Support Available</span></div>
+    <div class="ticker-item"><span class="ticker-num">10+</span><span class="ticker-label">Years Experience</span></div>
+    <div class="ticker-item"><span class="ticker-num">99%</span><span class="ticker-label">Client Satisfaction</span></div>
+    <div class="ticker-item"><span class="ticker-num">Africa</span><span class="ticker-label">Wide Operations</span></div>
+    <!-- Duplicate for loop -->
+    <div class="ticker-item"><span class="ticker-num">99.9%</span><span class="ticker-label">Uptime SLA</span></div>
+    <div class="ticker-item"><span class="ticker-num">50+</span><span class="ticker-label">Projects Delivered</span></div>
+    <div class="ticker-item"><span class="ticker-num">24/7</span><span class="ticker-label">Support Available</span></div>
+    <div class="ticker-item"><span class="ticker-num">10+</span><span class="ticker-label">Years Experience</span></div>
+    <div class="ticker-item"><span class="ticker-num">99%</span><span class="ticker-label">Client Satisfaction</span></div>
+    <div class="ticker-item"><span class="ticker-num">Africa</span><span class="ticker-label">Wide Operations</span></div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="services-header fade-up">
+    <div>
+      <div class="section-label">What We Do</div>
+      <h2 class="section-title">Our Core <em>Services</em></h2>
+    </div>
+    <p class="services-intro">End-to-end technology services designed to accelerate digital transformation across Africa — from infrastructure to intelligence and everything in between.</p>
+  </div>
+
+  <!-- SERVICE ACCORDION LIST -->
+  <div class="service-accordion">
+
+    <div class="svc-row fade-up" onclick="toggleService(this)">
+      <div class="svc-row-wrapper">
+        <div class="svc-left">
+          <span class="svc-num">01</span>
+          <div class="svc-header">
+            <h3 class="svc-title">IT Infrastructure & Cloud</h3>
+            <p class="svc-tagline">Robust cloud and on-premise infrastructure engineered for performance, security, and scale.</p>
+          </div>
+        </div>
+        <div class="svc-right">
+          <div class="svc-tags-inline">
+            <span class="tag">Cloud</span><span class="tag">DevOps</span><span class="tag">Zoho</span><span class="tag">M365</span>
+          </div>
+          <div class="svc-toggle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="svc-body">
+        <div class="svc-body-inner">
+          <div class="svc-bullets-grid">
+            <div class="svc-bullets-col">
+              <ul class="svc-list">
+                <li>Cloud migration & architecture</li>
+                <li>Data centre management</li>
+                <li>DevOps automation</li>
+              </ul>
+            </div>
+            <div class="svc-bullets-col">
+              <ul class="svc-list">
+                <li>Network deployment</li>
+                <li>Zoho Workplace implementation</li>
+                <li>Microsoft Office 365 solutions</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="svc-row fade-up" style="transition-delay:0.05s" onclick="toggleService(this)">
+      <div class="svc-row-wrapper">
+        <div class="svc-left">
+          <span class="svc-num">02</span>
+          <div class="svc-header">
+            <h3 class="svc-title">AI & Machine Learning</h3>
+            <p class="svc-tagline">Designing intelligent systems that learn, adapt, and optimize your business processes.</p>
+          </div>
+        </div>
+        <div class="svc-right">
+          <div class="svc-tags-inline">
+            <span class="tag">ML</span><span class="tag">NLP</span><span class="tag">MLOps</span><span class="tag">AI Agents</span>
+          </div>
+          <div class="svc-toggle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="svc-body">
+        <div class="svc-body-inner">
+          <div class="svc-bullets-grid">
+            <div class="svc-bullets-col">
+              <ul class="svc-list">
+                <li>AI strategy consulting & roadmapping</li>
+                <li>Machine learning model development</li>
+                <li>Natural language processing (NLP)</li>
+                <li>Computer vision & image recognition</li>
+              </ul>
+            </div>
+            <div class="svc-bullets-col">
+              <ul class="svc-list">
+                <li>Predictive analytics & forecasting</li>
+                <li>Process automation with AI agents</li>
+                <li>AI-powered chatbots & virtual assistants</li>
+                <li>Data pipeline & model deployment (MLOps)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="svc-row fade-up" style="transition-delay:0.1s" onclick="toggleService(this)">
+      <div class="svc-row-wrapper">
+        <div class="svc-left">
+          <span class="svc-num">03</span>
+          <div class="svc-header">
+            <h3 class="svc-title">Custom Software Development</h3>
+            <p class="svc-tagline">Tailored software solutions for web, mobile, and enterprise applications that scale.</p>
+          </div>
+        </div>
+        <div class="svc-right">
+          <div class="svc-tags-inline">
+            <span class="tag">Web</span><span class="tag">Mobile</span><span class="tag">ERP</span><span class="tag">API</span>
+          </div>
+          <div class="svc-toggle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="svc-body">
+        <div class="svc-body-inner">
+          <div class="svc-bullets-grid">
+            <div class="svc-bullets-col">
+              <ul class="svc-list">
+                <li>Responsive website design & development</li>
+                <li>Full-stack web applications</li>
+                <li>Mobile app development (iOS & Android)</li>
+                <li>E-commerce platforms & marketplaces</li>
+              </ul>
+            </div>
+            <div class="svc-bullets-col">
+              <ul class="svc-list">
+                <li>Enterprise resource planning (ERP) systems</li>
+                <li>CMS & portal development</li>
+                <li>API development & third-party integration</li>
+                <li>Legacy system modernization</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="svc-row fade-up" style="transition-delay:0.15s" onclick="toggleService(this)">
+      <div class="svc-row-wrapper">
+        <div class="svc-left">
+          <span class="svc-num">04</span>
+          <div class="svc-header">
+            <h3 class="svc-title">Software & Digital Solutions</h3>
+            <p class="svc-tagline">Digital tools and platforms that streamline operations and drive measurable outcomes.</p>
+          </div>
+        </div>
+        <div class="svc-right">
+          <div class="svc-tags-inline">
+            <span class="tag">Document Mgmt</span><span class="tag">Productivity</span><span class="tag">Automation</span>
+          </div>
+          <div class="svc-toggle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="svc-body">
+        <div class="svc-body-inner">
+          <div class="svc-bullets-grid">
+            <div class="svc-bullets-col">
+              <ul class="svc-list">
+                <li>Custom application development</li>
+                <li>Enterprise Document Management</li>
+                <li>Business productivity platforms</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="svc-row fade-up" style="transition-delay:0.2s" onclick="toggleService(this)">
+      <div class="svc-row-wrapper">
+        <div class="svc-left">
+          <span class="svc-num">05</span>
+          <div class="svc-header">
+            <h3 class="svc-title">Training & Capacity Building</h3>
+            <p class="svc-tagline">Empowering teams with the skills they need to thrive in a technology-driven world.</p>
+          </div>
+        </div>
+        <div class="svc-right">
+          <div class="svc-tags-inline">
+            <span class="tag">Corporate IT</span><span class="tag">Cloud Cert</span><span class="tag">AI Skills</span>
+          </div>
+          <div class="svc-toggle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="svc-body">
+        <div class="svc-body-inner">
+          <div class="svc-bullets-grid">
+            <div class="svc-bullets-col">
+              <ul class="svc-list">
+                <li>Corporate IT training</li>
+                <li>DevOps & Cloud certification</li>
+                <li>AI skills development</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- HOW WE WORK -->
+<section class="process" id="process">
+  <div class="section-label fade-up">Our Approach</div>
+  <h2 class="section-title fade-up">How We <em>Work</em></h2>
+  <p class="process-intro fade-up">A structured, transparent methodology that delivers results — every time.</p>
+
+  <div class="process-grid">
+    <div class="process-step fade-up">
+      <div class="process-step-num">01</div>
+      <div class="process-connector"></div>
+      <div class="process-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+      </div>
+      <h3 class="process-step-title">Discover</h3>
+      <p class="process-step-desc">We begin with a deep dive into your business, goals, and technical landscape to map the right strategy.</p>
+    </div>
+    <div class="process-step fade-up" style="transition-delay:0.1s">
+      <div class="process-step-num">02</div>
+      <div class="process-connector"></div>
+      <div class="process-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>
+        </svg>
+      </div>
+      <h3 class="process-step-title">Design</h3>
+      <p class="process-step-desc">Architect solutions tailored to your needs — from system design and UX to AI model selection and infrastructure blueprints.</p>
+    </div>
+    <div class="process-step fade-up" style="transition-delay:0.2s">
+      <div class="process-step-num">03</div>
+      <div class="process-connector"></div>
+      <div class="process-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+        </svg>
+      </div>
+      <h3 class="process-step-title">Deploy</h3>
+      <p class="process-step-desc">Agile delivery in focused sprints. We build, test, and launch with full transparency and zero surprise at go-live.</p>
+    </div>
+    <div class="process-step fade-up" style="transition-delay:0.3s">
+      <div class="process-step-num">04</div>
+      <div class="process-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+        </svg>
+      </div>
+      <h3 class="process-step-title">Support</h3>
+      <p class="process-step-desc">24/7 monitoring, proactive maintenance, and continuous optimization so your systems stay ahead of demand.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why" id="why">
+  <div class="section-label fade-up">Why Loratek</div>
+  <h2 class="section-title fade-up">Technology <em>You Can Trust</em></h2>
+
+  <div class="why-grid">
+    <div class="why-list">
+      <div class="why-item fade-up">
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div>
+          <div class="why-title">Multi-Cloud Certified</div>
+          <p class="why-text">Our engineers hold active certifications across AWS, Azure, and Google Cloud — ensuring best-in-class architecture, security, and compliance for every deployment.</p>
+        </div>
+      </div>
+      <div class="why-item fade-up" style="transition-delay:0.1s">
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+        <div>
+          <div class="why-title">Productivity Suite Experts</div>
+          <p class="why-text">From Zoho Workplace to Microsoft 365, we handle full implementation, migration, and user training so your team gets productive from day one.</p>
+        </div>
+      </div>
+      <div class="why-item fade-up" style="transition-delay:0.15s">
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3"/></svg></div>
+        <div>
+          <div class="why-title">Applied AI & Automation</div>
+          <p class="why-text">We build and deploy intelligent systems including ML models, NLP engines, and process automation that deliver measurable ROI — not just proofs of concept.</p>
+        </div>
+      </div>
+      <div class="why-item fade-up" style="transition-delay:0.2s">
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <div>
+          <div class="why-title">Reliable Delivery</div>
+          <p class="why-text">Consistent, on-time project delivery with transparent communication, agile sprints, and dedicated project managers keeping you informed at every milestone.</p>
+        </div>
+      </div>
+      <div class="why-item fade-up" style="transition-delay:0.25s">
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <div>
+          <div class="why-title">Client-First Approach</div>
+          <p class="why-text">Dedicated support teams with deep understanding of your business context, providing 24/7 monitoring and proactive issue resolution.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="why-visual">
+      <div class="testi-card fade-up">
+        <div class="testi-quote-mark">"</div>
+        <p class="testi-text">Loratek transformed our entire IT infrastructure within weeks. The cloud migration was seamless and our team was productive on day one. Truly enterprise-grade delivery.</p>
+        <div class="testi-author">
+          <div class="testi-avatar">AO</div>
+          <div>
+            <div class="testi-name">Adebayo Okafor</div>
+            <div class="testi-role">CTO, FinServe Nigeria</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card fade-up" style="transition-delay:0.1s">
+        <div class="testi-quote-mark">"</div>
+        <p class="testi-text">Their AI team built a document processing pipeline that cut our manual review time by 70%. The MLOps setup means it keeps improving on its own. Outstanding work.</p>
+        <div class="testi-author">
+          <div class="testi-avatar">NK</div>
+          <div>
+            <div class="testi-name">Ngozi Kamau</div>
+            <div class="testi-role">Head of Operations, LogiTrack East Africa</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card fade-up" style="transition-delay:0.2s">
+        <div class="testi-quote-mark">"</div>
+        <p class="testi-text">From our Microsoft 365 rollout to custom ERP development — Loratek delivered everything on time, on budget, with zero disruption to our daily operations.</p>
+        <div class="testi-author">
+          <div class="testi-avatar">SM</div>
+          <div>
+            <div class="testi-name">Samuel Mensah</div>
+            <div class="testi-role">Director of IT, Accra Health Group</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VISION -->
+<section class="vision-section" id="vision">
+  <div class="section-label">Our Direction</div>
+  <h2 class="section-title">The Loratek <em>Mandate</em></h2>
+  <div class="vision-grid">
+    <div class="vision-card">
+      <div class="vision-card-num">01 / VISION</div>
+      <h3 class="vision-card-title">Africa's Standard for Digital Excellence</h3>
+      <p class="vision-card-text">To be a leading provider of innovative technology and AI solutions in Africa, setting the standard for digital excellence across the continent and shaping the future of enterprise technology.</p>
+    </div>
+    <div class="vision-card">
+      <div class="vision-card-num">02 / MISSION</div>
+      <h3 class="vision-card-title">Empowering Through Intelligent Technology</h3>
+      <p class="vision-card-text">To empower organizations through reliable, scalable, and intelligent technology solutions that drive measurable business outcomes — delivered with integrity, speed, and precision.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div class="cta-bg-text">GET IN TOUCH</div>
+  <div class="cta-content">
+    <div class="section-label" style="justify-content:center">Contact Us</div>
+    <h2 class="section-title">Ready to Build<br><em>Something Great?</em></h2>
+    <p class="cta-desc">Let's talk about how Loratek can power your organization's digital future. Our team is ready to help — reach out today.</p>
+    <a href="/cdn-cgi/l/email-protection#dfb6b1b9b09fb3b0adbeabbab4f1bcb0b2" class="cta-email"><span class="__cf_email__" data-cfemail="21484f474e614d4e534055444a0f424e4c">[email&#160;protected]</span></a>
+    <br>
+    <a href="/cdn-cgi/l/email-protection#ea83848c85aa8685988b9e8f81c4898587" class="btn-primary">Start a Conversation →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <svg width="28" height="24" viewBox="0 0 80 66" fill="none">
+      <line x1="8" y1="6" x2="8" y2="52" stroke="white" stroke-width="2.8" stroke-linecap="round"/>
+      <line x1="16" y1="14" x2="16" y2="52" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+      <line x1="24" y1="22" x2="24" y2="52" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="8" y1="52" x2="68" y2="52" stroke="white" stroke-width="2.8" stroke-linecap="round"/>
+      <line x1="16" y1="52" x2="68" y2="44" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+      <line x1="24" y1="52" x2="68" y2="36" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+      <circle cx="8" cy="52" r="3.5" fill="#e8ff47"/>
+      <circle cx="68" cy="52" r="3.5" fill="#e8ff47"/>
+    </svg>
+    <span class="footer-logo-text"><span>LORA</span>TEK</span>
+    <span class="footer-copy">© 2026 Loratek LTD. All rights reserved.</span>
+  </div>
+  <div class="status-pill">
+    <div class="status-dot-green"></div>
+    All Systems Operational
+  </div>
+  <ul class="footer-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">How We Work</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#vision">Vision</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // ── ACCORDION ──────────────────────────────────────────────────────
+  function toggleService(row) {
+    const isOpen = row.classList.contains('open');
+    document.querySelectorAll('.svc-row.open').forEach(r => r.classList.remove('open'));
+    if (!isOpen) row.classList.add('open');
+  }
+
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+
+  (function animRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left 
