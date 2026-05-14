@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Forum&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&family=JetBrains+Mono:wght@300;400;500&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  h1,h2,h3,h4,h5,h6 { font-family: 'Forum', serif; font-weight: 400; }
+}
+
+@layer utilities {
+  .font-forum { font-family: 'Forum', serif; }
+  .font-jb { font-family: 'JetBrains Mono', monospace; }
+}
+
+@keyframes fadeup {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes blink { 0%,100% { opacity:1 } 50% { opacity:.3 } }
+
+.animate-fadeup  { animation: fadeup 0.8s ease both; }
+.animate-fadeup1 { animation: fadeup 0.8s 0.15s ease both; }
+.animate-fadeup2 { animation: fadeup 0.8s 0.25s ease both; }
+.animate-blink   { animation: blink 3s infinite; }
